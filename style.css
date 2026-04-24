@@ -1,0 +1,429 @@
+/* ================================================================
+   style.css
+   WebGIS Kec. Mapanget — Eka Putra Natanael (241011060052)
+   Tema: Navy Government · Font: Cinzel + Source Sans 3
+   ================================================================ */
+
+
+/* ----------------------------------------------------------------
+   1. CSS VARIABLES & RESET
+---------------------------------------------------------------- */
+:root {
+    --navy:       #0d1b3e;
+    --navy-mid:   #152347;
+    --navy-dark:  #070e24;
+    --navy-light: #1e3a6e;
+    --gold:       #f0c040;
+    --gold-light: #fde68a;
+    --gold-dim:   rgba(240, 192, 64, 0.25);
+    --white:      #f0f4ff;
+    --text-dim:   rgba(240, 244, 255, 0.58);
+    --glass:      rgba(7, 14, 36, 0.82);
+    --radius:     10px;
+    --header-h:   82px;
+    --shadow:     0 8px 32px rgba(0, 0, 0, 0.55);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+    background: var(--navy-dark);
+    color: var(--white);
+}
+
+
+/* ----------------------------------------------------------------
+   2. HEADER BAR
+---------------------------------------------------------------- */
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-h);
+    z-index: 2000;
+    background: linear-gradient(
+        135deg,
+        var(--navy-dark) 0%,
+        var(--navy)      45%,
+        #193060          100%
+    );
+    border-bottom: 2px solid var(--gold);
+    box-shadow: 0 4px 28px rgba(0, 0, 0, 0.7);
+
+    display: grid;
+    grid-template-columns: 260px 1fr 260px;
+    align-items: center;
+    padding: 0 24px;
+
+    /* shimmer line bawah */
+    overflow: visible;
+}
+
+#header::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--gold) 40%,
+        var(--gold-light) 50%,
+        var(--gold) 60%,
+        transparent 100%
+    );
+    animation: shimmer 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    0%,100% { opacity: 0.35; }
+    50%      { opacity: 0.9; }
+}
+
+
+/* --- Kiri: identitas mahasiswa --- */
+.header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.h-label {
+    font-size: 8.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.75;
+}
+
+.h-name {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.3;
+}
+
+.h-nim {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    letter-spacing: 0.4px;
+}
+
+
+/* --- Tengah: judul peta --- */
+.header-center {
+    text-align: center;
+    padding: 0 12px;
+}
+
+.header-center h1 {
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 1.2px;
+    line-height: 1.25;
+    text-shadow: 0 0 30px rgba(240, 192, 64, 0.4);
+}
+
+.h-subtitle {
+    font-size: 10.5px;
+    color: var(--gold-light);
+    opacity: 0.75;
+    margin-top: 4px;
+    letter-spacing: 0.6px;
+    font-style: italic;
+}
+
+
+/* --- Kanan: kotak cuaca --- */
+.header-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#weather-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--gold-dim);
+    border-radius: var(--radius);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 210px;
+    min-height: 52px;
+    justify-content: center;
+}
+
+#weather-loading {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-style: italic;
+}
+
+/* item cuaca (suhu, angin, kondisi) */
+.w-item {
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.w-val {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1;
+}
+
+.w-lbl {
+    font-size: 8.5px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-top: 2px;
+}
+
+.w-divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.12);
+    flex-shrink: 0;
+}
+
+.w-emoji {
+    font-size: 22px;
+    line-height: 1;
+}
+
+.w-condition-text {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 2px;
+}
+
+#weather-update {
+    display: block;
+    font-size: 8px;
+    color: rgba(255,255,255,0.25);
+    text-align: center;
+    margin-top: 3px;
+    letter-spacing: 0.3px;
+}
+
+
+/* ----------------------------------------------------------------
+   3. PETA — offset di bawah header
+---------------------------------------------------------------- */
+#map {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+}
+
+
+/* ----------------------------------------------------------------
+   4. LEGENDA (pojok kanan bawah)
+---------------------------------------------------------------- */
+#legenda {
+    position: fixed;
+    bottom: 30px;
+    right: 16px;
+    z-index: 1500;
+    background: var(--glass);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--gold-dim);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    min-width: 210px;
+    box-shadow: var(--shadow);
+    animation: fadeUp 0.6s ease 0.4s both;
+}
+
+#legenda h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 11px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--gold-dim);
+}
+
+.leg-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.leg-row:last-child {
+    margin-bottom: 0;
+}
+
+/* ikon bulat dengan emoji */
+.leg-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* batas wilayah — kotak outline hitam */
+.leg-border {
+    width: 28px;
+    height: 14px;
+    border: 3px solid #000000;
+    border-radius: 3px;
+    background: transparent;
+    flex-shrink: 0;
+}
+
+.leg-label {
+    font-size: 11.5px;
+    color: var(--white);
+    line-height: 1.3;
+}
+
+
+/* ----------------------------------------------------------------
+   5. CUSTOM MARKER ICON (DivIcon dari Leaflet)
+---------------------------------------------------------------- */
+.custom-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2.5px solid rgba(255,255,255,0.7);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    font-size: 16px;
+    line-height: 1;
+    transition: transform 0.15s ease;
+    cursor: pointer;
+}
+
+.custom-marker:hover {
+    transform: scale(1.2);
+    z-index: 9999 !important;
+}
+
+/* Ekor penunjuk di bawah marker */
+.custom-marker::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid rgba(255,255,255,0.7);
+}
+
+
+/* ----------------------------------------------------------------
+   6. LEAFLET UI OVERRIDES
+---------------------------------------------------------------- */
+/* Zoom buttons */
+.leaflet-bar a {
+    background-color: var(--navy) !important;
+    color: var(--gold-light) !important;
+    border-color: rgba(240,192,64,0.3) !important;
+    font-weight: 700;
+}
+
+.leaflet-bar a:hover {
+    background-color: var(--navy-mid) !important;
+    color: var(--gold) !important;
+}
+
+/* Popup styling */
+.leaflet-popup-content-wrapper {
+    background: var(--navy) !important;
+    color: var(--white) !important;
+    border: 1px solid rgba(240,192,64,0.35) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6) !important;
+}
+
+.leaflet-popup-tip {
+    background: var(--navy) !important;
+}
+
+.leaflet-popup-content {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12px;
+    color: var(--text-dim);
+}
+
+.leaflet-popup-content table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.leaflet-popup-content td {
+    padding: 3px 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.leaflet-popup-content strong {
+    color: var(--gold-light);
+}
+
+/* Layer control */
+.leaflet-control-layers {
+    background: var(--navy) !important;
+    border: 1px solid var(--gold-dim) !important;
+    border-radius: var(--radius) !important;
+    color: var(--white) !important;
+}
+
+/* Attribution */
+.leaflet-control-attribution {
+    background: rgba(7,14,36,0.85) !important;
+    color: rgba(255,255,255,0.35) !important;
+    font-size: 9px !important;
+    border-radius: 6px 0 0 0 !important;
+}
+
+.leaflet-control-attribution a {
+    color: var(--gold) !important;
+}
+
+
+/* ----------------------------------------------------------------
+   7. ANIMATIONS
+---------------------------------------------------------------- */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#header {
+    animation: fadeUp 0.5s ease 0s both;
+}

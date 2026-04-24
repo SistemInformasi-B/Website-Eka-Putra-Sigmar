@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <!-- Leaflet & QGIS2Web CSS (bawaan plugin — jangan diubah) -->
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet.photon.css">
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+        <!-- Custom Styles -->
+        <link rel="stylesheet" href="style.css">
+
+        <title>WebGIS Kec. Mapanget — Eka Putra Natanael</title>
+    </head>
+    <body>
+
+        <!-- ============================================================
+             HEADER — Judul + Identitas + Cuaca
+        ============================================================ -->
+        <header id="header">
+
+            <!-- Kiri: identitas mahasiswa -->
+            <div class="header-left">
+                <span class="h-label">Mahasiswa</span>
+                <span class="h-name">Eka Putra Natanael</span>
+                <span class="h-nim">NIM: 241011060052</span>
+            </div>
+
+            <!-- Tengah: judul peta -->
+            <div class="header-center">
+                <h1>PETA FASILITAS UMUM KEL. KAIRAGI DUA</h1>
+                <p class="h-subtitle">Kota Manado, Sulawesi Utara · Sistem Informasi Geografis</p>
+            </div>
+
+            <!-- Kanan: widget cuaca real-time -->
+            <div class="header-right">
+                <div id="weather-box">
+                    <span id="weather-loading">⏳ Memuat cuaca…</span>
+                    <!-- diisi oleh script.js -->
+                </div>
+            </div>
+
+        </header>
+
+        <!-- ============================================================
+             PETA UTAMA (fullscreen di bawah header)
+        ============================================================ -->
+        <div id="map"></div>
+
+        <!-- ============================================================
+             LEGENDA (pojok kanan bawah)
+        ============================================================ -->
+        <div id="legenda">
+            <h3>&#9660; Legenda</h3>
+            <div class="leg-row">
+                <div class="leg-border"></div>
+                <span class="leg-label">Batas Kelurahan / Desa</span>
+            </div>
+            <div class="leg-row">
+                <div class="leg-icon" style="background:#fbbf24;">🕌</div>
+                <span class="leg-label">Titik Ibadah</span>
+            </div>
+            <div class="leg-row">
+                <div class="leg-icon" style="background:#3b82f6;">🏠</div>
+                <span class="leg-label">Rumah Eka Putra</span>
+            </div>
+            <div class="leg-row">
+                <div class="leg-icon" style="background:#ef4444;">🍽️</div>
+                <span class="leg-label">Restoran</span>
+            </div>
+            <div class="leg-row">
+                <div class="leg-icon" style="background:#7c3aed;">☕</div>
+                <span class="leg-label">Café</span>
+            </div>
+            <div class="leg-row">
+                <div class="leg-icon" style="background:#10b981;">🛒</div>
+                <span class="leg-label">Minimarket</span>
+            </div>
+            <div class="leg-row">
+                <div class="leg-icon" style="background:#0ea5e9;">🏫</div>
+                <span class="leg-label">Sekolah</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+             SKRIP — urutan WAJIB dipertahankan
+        ============================================================ -->
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.photon.js"></script>
+
+        <!-- Data GeoJSON layer -->
+        <script src="data/Batas_Wilayah_KelurahanDesa_10K_AR_2.js"></script>
+        <script src="data/titikibadahmanadofixbulatcentroids_3.js"></script>
+        <script src="data/rumahekaputra_4.js"></script>
+        <script src="data/restaurantcentroids_5.js"></script>
+        <script src="data/cafe__centroids_6.js"></script>
+        <script src="data/Minimarket_7.js"></script>
+        <script src="data/Sekolah_8.js"></script>
+
+        <!-- Custom logic — HARUS setelah semua data .js di atas -->
+        <script src="script.js"></script>
+
+    </body>
+</html>
